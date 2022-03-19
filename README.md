@@ -6,16 +6,33 @@ By Bella White, Nathan Lee, & Vance Winstead
 
 Github Link: https://github.com/bronte999/466SenatorTweetAnalysis
 
-## Introduction…
+## Introduction
+
+The goal of this project was to determine whether Congressional approval ratings or extremism could be predicted based on their Twitter activity. This report describes the analysis of the Congressional Tweets Dataset, a project which documents all tweets from all active members of Congress, starting from June 2017. From this wealth of data only the tweets originating from 2020 were selected for analysis due to its status as an election year and a highly polarizing global pandemic.  
 
 ## Data Collection
 
-Sources: GitHub, Twitter API, Approval Rating, Ideology Score
+### Sources:
+
+[Compiled Congressional Tweets](https://github.com/alexlitel/congresstweets)
+
+[Congressional Ideology Scores](https://www.govtrack.us/congress/members/report-cards/2019/house/ideology)
+
+[Approval Rating](https://morningconsult.com/senator-rankings/)
 
 The Approval ratings site did not have an export, so the webpage had to be scraped using Beautiful Soup.
 
+Additionally the Twitter APIv1 was utilized to extract more information from the Congression Tweet Dataset.
+
+
 ## Preprocessing
-…
+
+Initially the project’s scope included all congressional tweets from the year 2020. Almost immediately this became an issue as it wasn’t feasible to store and process that much data. The scope was reduced to 10,000 random samples of tweets from 2020 and restricted to only senators. 
+
+The Congressional Twitter dataset needed to be processed as it only includes the screen name, date posted, URL of the tweet, and the truncated content of the tweet. In order to retrieve meaningful data for each tweet the Twitter API had to be utilized to retrieve tweet statistics, full text, and info about the senator’s Twitter profile. There are two versions of the Twitter API, the second version is relatively new but includes more engagement metrics. However the first version has more documentation and was in a more stable condition so it was chosen for this project. 
+
+The preprocessing steps are included in Senate_Tweet_Preprocessing.ipynb in the linked GitHub repo. 
+
 In order to perform sentiment analysis, the VADER sentiment analysis tool was used. This tool is included as part of the Python package nltk. VADER specializes in analyzing digital communication, as it is able to recognize slang, all caps, and emoticons and factor that into its sentiment analysis in addition to the more traditional analysis of words and punctuation. After running sentiment analysis, VADER will produce four fields: positive, negative, neutral, and compound. The first three are on a scale from 0.0 to 1.0 and are equivalent to the percentage of words in that Tweet that fall into that category. The compound value is on a scale from -1.0 to 1.0 and normalizes all lexicon ratings, allowing you to analyze both positive and negative sentiment at the same time.
 
 A “extremism” score was also calculated by computing the z score of a congress member’s ideology and taking the absolute value. This enables the grouping of the far left with the far right into one group, leaving  centrists in the other group.
@@ -31,7 +48,6 @@ tweets_and_approval_full['match'] = tweets_and_approval_full.apply(lambda x: x.f
 tweets_and_approval = tweets_and_approval_full[tweets_and_approval_full['match']].drop(columns=['match'])
 ```
 Note: This code was inspired by: https://towardsdatascience.com/joining-dataframes-by-substring-match-with-python-pandas-8fcde5b03933
-Exploratory Analysis
 
 ## Neural Network
 The first predictor tried was a multilayer perceptron or neural network. Neural networks are a supervised learning method and can be used for classification. Neural networks are a good application to this problem because neural networks handle continuous values for classification well. The dataset is full of continuous values that would have to be binned for other approaches such as naive bayesian classification.
@@ -48,8 +64,6 @@ To preprocess the data for the network, each column of the data was standardized
 
 After several trial runs and experimenting with different network sizes, the accuracy hovered between 70 and 80% which is well above the baseline of guessing one category. One of the trials had a hidden network size  of 2 layers of 70 neurons with a Softmax activation function.
 After training the models, test based feature importance was run on the model. Test based feature importance is a process that goes through each predictor feature in the test dataset and randomizes it. After randomization, the neural network uses that data to try to predict the output. If a feature is more significant, the model will not be as accurate since the model used that feature heavily to come to the final decision. If a feature is less significant, the model output will be more correct since the model didn’t use that feature as much to make the final decision. 
-
-
 
 The most important feature found is avg_compound_sentiment. That means that the trained neural network used avg_compound_sentiment the most when classifying a senator’s political party based on their Twitter. That implies that one party Tweets distinctly more negatively than the other. After some aggregation, the data confirmed there was a distinct difference between tweet sentiment of different parties, revealing that Democrats’ tweets had an average sentiment of -0.53 compared to a more positive sentiment from the Republicans’ tweets at 0.49. 
 
@@ -127,16 +141,10 @@ This model ended up having an accuracy of 0.36, whereas the Scikit Learn model h
 
 Most of these models failed to predict any better than the baseline. However, there is one notable exception to this: the pol_leaning column, which had an accuracy of 0.72 and a baseline of 0.48. This column was created by splitting the ideology scores into bins with one less than 0.5 and the other greater than or equal to 0.5. Furthermore, the most important feature in this tree was the compound_sentiment, which had a gain ratio of 0.3038, indicating that it did significantly reduce entropy within the tree. Looking at a graph of ideology against compound sentiment, it is clear there certainly is a trend between the two.
 
-
-
 While the trend is a bit less clear when compound sentiment is between 0.1 and 0.4, if you look at the extremes, the partisan divide is very clear. Nobody with an ideology above 0.5 had a compound sentiment below 0.1, and nobody with an ideology lower than 0.5 had an ideology above 0.45. This means that there were no liberals with extremely positive sentiments and there were no conservatives with extremely negative sentiments. This will be analyzed further in the following section.
 
-
-
-
-
-
 ## Results
+<<<<<<< HEAD
 
 ## Resources
 
@@ -150,3 +158,6 @@ While the trend is a bit less clear when compound sentiment is between 0.1 and 0
 **Twitter_Decision_Tree**: Implement a decision tree to the combined data  
 **NeuralNetwork**: applying a neural network to our combined data  
 
+=======
+From this analysis of Senatorial tweets from 2020 an association between the average compound sentiment and ideological scores can be established. 
+>>>>>>> a0e604abf6cdb2f12c933c308e5315843f56f39e
