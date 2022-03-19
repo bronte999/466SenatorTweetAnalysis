@@ -144,7 +144,7 @@ Most of these models failed to predict any better than the baseline. However, th
 While the trend is a bit less clear when compound sentiment is between 0.1 and 0.4, if you look at the extremes, the partisan divide is very clear. Nobody with an ideology above 0.5 had a compound sentiment below 0.1, and nobody with an ideology lower than 0.5 had an ideology above 0.45. This means that there were no liberals with extremely positive sentiments and there were no conservatives with extremely negative sentiments. This will be analyzed further in the following section.
 
 ## Results
-<<<<<<< HEAD
+From this analysis of Senatorial tweets from 2020 an association between the average compound sentiment and ideological scores can be established. 
 
 ## Resources
 
@@ -158,6 +158,4 @@ While the trend is a bit less clear when compound sentiment is between 0.1 and 0
 **Twitter_Decision_Tree**: Implement a decision tree to the combined data  
 **NeuralNetwork**: applying a neural network to our combined data  
 
-=======
-From this analysis of Senatorial tweets from 2020 an association between the average compound sentiment and ideological scores can be established. 
->>>>>>> a0e604abf6cdb2f12c933c308e5315843f56f39e
+
