@@ -139,3 +139,14 @@ While the trend is a bit less clear when compound sentiment is between 0.1 and 0
 ## Results
 
 ## Resources
+
+
+## Notebooks:
+**ApprovalRatingScraper**: Scraping approval ratings from `rankings.html`  
+**ApprovalIdeologyMerge**: Merging together approval ratings and ideology tables by senator  
+**Senate_Tweet_Preprocessing**: Get tweets, add more data from Twitter API, and do some data analysis  
+**Sentiment_Analysis**: Add sentiment analysis to each tweet  
+
+**Twitter_Decision_Tree**: Implement a decision tree to the combined data  
+**NeuralNetwork**: applying a neural network to our combined data  
+
